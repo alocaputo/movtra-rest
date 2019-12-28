@@ -2,15 +2,18 @@ import requests
 from .models import Movie
 from django.conf import settings
 from .serializers import MovieSerializer
-from rest_framework import generics
+from rest_framework import generics, permissions
 from rest_framework.decorators import api_view
 from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
 from pprint import pprint #debug
 
 # Create your views here.
-class MovieListCreate(generics.ListCreateAPIView):
+class MovieViewSet(generics.ListCreateAPIView):
     queryset = Movie.objects.all()
+    permission_classes = [
+        permissions.AllowAny
+    ]
     serializer_class = MovieSerializer
     http_method_names = ['get', 'head']
 
@@ -28,7 +31,6 @@ def get_movie(request, tmdb):
     url = settings.TMDB_URL.format(endpoint='movie')
     url += str(tmdb)
     r = requests.get(url=url, params=payload)
-    print(r.url)
     if not r:
         raise NotFound(detail='Movie not found.')
 

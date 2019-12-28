@@ -2,29 +2,26 @@ import React, { Component } from 'react';
 import Poster from '../Poster';
 import { Container } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getMovies } from '../../../actions/movies'
 
 class All extends Component {
-  state = {
-    movies: []
-  };
+  static propTypes = {
+    movies: PropTypes.array.isRequired,
+    getMovies: PropTypes.func.isRequired
+  }
   
   async componentDidMount() {
-    try {
-      const res = await fetch('http://127.0.0.1:8000/api/movies/'); // fetching the data from api, before the page loaded
-      const movies = await res.json();
-      this.setState({
-        movies
-      });
-    } catch (e) {
-      console.log(e);
-    }
+    this.props.getMovies();
   }
 
   render() {
+    
     return (
         <Container>
             <div>
-        {this.state.movies.map(movie => (
+        {this.props.movies.map(movie => (
             
           <div key={movie.tmdb_id}>
             <h2>{movie.title}</h2>
@@ -43,4 +40,8 @@ class All extends Component {
   }
 }
 
-export default All;
+const mapStateToProps = state => ({
+  movies: state.movies.movies
+});
+
+export default connect(mapStateToProps, { getMovies })(All);
