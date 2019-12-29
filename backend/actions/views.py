@@ -9,6 +9,7 @@ from knox.auth import TokenAuthentication
 from .serializers import ActionSerializer, DiarySerializer
 from .models import Diary
 from django.db.models.functions import ExtractMonth, ExtractYear
+from .utils import AllowAnyGet
 
 # Action: relationship with the movie
 class Actions(generics.GenericAPIView):
@@ -116,7 +117,7 @@ class Watchlist(generics.GenericAPIView):
 # Log movie
 class DiaryView(generics.GenericAPIView):
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (AllowAnyGet,)
 
     def post(self, request, *args, **kwargs):
         """
@@ -156,11 +157,10 @@ class DiaryView(generics.GenericAPIView):
             movie = Movie.objects.get(tmdb_id=data['tmdb_id'])
         except Person.DoesNotExist:
             movie = Movie(**data)
-        print(movie)
+        if not request.user.id:
+            return Response('Forbidden')
         user = CustomUser.objects.get(id=request.user.id)
-        print(user)
         request.data['movie'] = movie
-
         #if request.data.get('rating'):
         #    r, _ = Ratings.objects.get_or_create(game=game, user=user)
         #    r.rating = request.data['rating']
@@ -172,6 +172,7 @@ class DiaryView(generics.GenericAPIView):
         if movie in user.watchlist.all():
             user.watchlist.remove(movie)
         print(request.data)
+        
         entry = Diary.objects.create(user=user, **request.data)
         
         if not movie in user.watched.all():
