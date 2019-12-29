@@ -24,6 +24,7 @@ class All extends Component {
         {this.props.movies.map(movie => (
             
           <div key={movie.tmdb_id}>
+            {console.log(movie)}
             <h2>{movie.title}</h2>
             <Link to={`movie/${movie.tmdb_id}`}>
             <Poster className="poster"
