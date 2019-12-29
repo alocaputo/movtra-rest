@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Movie(models.Model):
-    tmdb_id = models.CharField(primary_key=True, max_length=50)
+    tmdb_id = models.IntegerField(primary_key=True)
     adult = models.BooleanField(default=False)
     belongs_to_collection = models.IntegerField(null=True, blank=True)
     budget = models.IntegerField(null=True, blank=True)

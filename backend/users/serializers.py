@@ -13,16 +13,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    following = serializers.PrimaryKeyRelatedField(
-        many=True,
-        read_only=True
-    )
-
-    followers = serializers.PrimaryKeyRelatedField(
-        many=True,
-        read_only=True
-    )
-
     class Meta:
         model = CustomUser
         depth = 1
@@ -31,16 +21,9 @@ class ProfileSerializer(serializers.ModelSerializer):
             'username',
             'email',
             'bio',
-            'gravatar',
-            'location',
-            'twitter',
-            'played',
-            'liked',
-            'backlog',
-            'wishlist',
-            'favorites',
-            'following',
-            'followers',
+            'watched',
+            'watchlist',
+            'favorites'
         )
 
 

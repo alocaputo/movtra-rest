@@ -53,22 +53,16 @@ class UserView(generics.RetrieveAPIView):
 
 
 class ProfileView(generics.GenericAPIView):
-    """Endpoint for obtaining a user's profile.
-
-    The profile consists of the user's activity, favorite games, bio, reviews,
-    contact information, stats, lists, followers and other stuff. This endpoint
-    accepts both GET and POST methods.
-    """
+    """ TODO: Add auth for post method """
     def post(self, request, *args, **kwargs):
-        """Method for updating your profile."""
-        me = get_object_or_404(CustomUser, id=request.user.id)
-
+        """Method for updating your profile.
+        """
+        user = get_object_or_404(CustomUser, username=kwargs['username'])
         for key in request.data:
-          setattr(me, key, request.data[key])
-
-        me.save()
-        serializer = ProfileSerializer(me).data
-        print(serializer)
+          setattr(user, key, request.data[key])
+        
+        user.save()
+        serializer = ProfileSerializer(user).data
         return Response(serializer)
 
     def get(self, request, *args, **kwargs):
