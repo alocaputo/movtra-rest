@@ -3,6 +3,8 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 import { register } from '../../../actions/auth';
+import { Form, Button, Container } from 'semantic-ui-react'
+import 'semantic-ui-css/semantic.min.css';
 
 class Register extends Component {
     state = {
@@ -40,11 +42,9 @@ class Register extends Component {
           return <Redirect to="/" />;
         }
         return (
-            <div className="col-md-6 m-auto">
-        <div className="card card-body mt-5">
-          <h2 className="text-center">Register</h2>
-          <form onSubmit={this.onSubmit}>
-            <div className="form-group">
+          <Container>
+          <Form onSubmit={this.onSubmit}>
+              <Form.Field>
               <label>Username</label>
               <input
                 type="text"
@@ -53,48 +53,43 @@ class Register extends Component {
                 onChange={this.onChange}
                 value={username}
               />
-            </div>
-            <div className="form-group">
-              <label>Email</label>
-              <input
-                type="email"
-                className="form-control"
-                name="email"
-                onChange={this.onChange}
-                value={email}
-              />
-            </div>
-            <div className="form-group">
-              <label>Password</label>
-              <input
-                type="password"
-                className="form-control"
-                name="password"
-                onChange={this.onChange}
-                value={password}
-              />
-            </div>
-            <div className="form-group">
-              <label>Confirm Password</label>
-              <input
-                type="password"
-                className="form-control"
-                name="password2"
-                onChange={this.onChange}
-                value={password2}
-              />
-            </div>
-            <div className="form-group">
-              <button type="submit" className="btn btn-primary">
-                Register
-              </button>
-            </div>
-            <p>
+              </Form.Field>
+              <Form.Field>
+                <label>Email</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  name="email"
+                  onChange={this.onChange}
+                  value={email}
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  name="password"
+                  onChange={this.onChange}
+                  value={password}
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>Confirm Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  name="password2"
+                  onChange={this.onChange}
+                  value={password2}
+                />
+              </Form.Field>
+              <Button type='submit'>Register</Button>
+              <p>
               Already have an account? <Link to="/login">Login</Link>
             </p>
-          </form>
-        </div>
-      </div>
+            </Form>
+          </Container>
         );
     }
 }

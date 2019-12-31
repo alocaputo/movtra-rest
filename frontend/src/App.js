@@ -8,6 +8,7 @@ import store from './store'
 import Navbar from './modules/components/Navbar';
 import All from './modules/components/All'
 import MoviePage from './modules/components/MoviePage';
+import Profile from './modules/components/Profile';
 
 import Login from './modules/components/accounts/Login'
 import Register from './modules/components/accounts/Register'
@@ -26,17 +27,14 @@ class App extends Component {
     <Provider store={store}>
       <Router>
         <React.Fragment>
-          <React.Fragment>
-            <React.Suspense fallback={<div>Loading...</div>}>
-              <Navbar/>
-            </React.Suspense>
-          </React.Fragment>
+          <Navbar/>
           <Switch>
             <Route exact path="/" component={All} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/all" component={All} />
-            <PrivateRoute exact path="/movie/:tmdb_id" component={MoviePage} />
+            <Route exact path="/movie/:tmdb_id" component={MoviePage} />
+            <Route exact path="/user/:username" component={Profile}/>
           </Switch>
         </React.Fragment>
       </Router>

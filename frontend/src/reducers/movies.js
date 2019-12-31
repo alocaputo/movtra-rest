@@ -1,4 +1,4 @@
-import { GET_MOVIES } from '../actions/types.js'
+import { GET_MOVIES, LOG_MOVIE } from '../actions/types.js'
 
 const initialState = {
     movies: []
@@ -7,6 +7,7 @@ const initialState = {
 export default function(state = initialState, action) {
     switch(action.type) {
         case GET_MOVIES:
+        case LOG_MOVIE:
             return {
                 ...state,
                 movies: action.payload

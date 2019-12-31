@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { Menu, Segment, Button } from 'semantic-ui-react'
+import 'semantic-ui-css/semantic.min.css';
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import { logout } from '../../../actions/auth'
-import 'semantic-ui-css/semantic.min.css'
 import logo from '../../../logo.png'
 
 class Navbar extends Component {
@@ -24,7 +24,7 @@ class Navbar extends Component {
     const authLinks = (
       <>
         <Menu.Item>
-    <span>{ user ? `Hello ${user.username}` : ''}</span>
+          <Link to={isAuthenticated ? `/user/${user.username}` : ''} ><span>{ user ? `Hello ${user.username}` : ''}</span></Link>
         </Menu.Item>
         <Menu.Item>
           <Button color='red' onClick={this.props.logout}>Log out</Button>

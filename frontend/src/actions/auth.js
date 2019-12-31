@@ -60,7 +60,7 @@ export const register  = ({ username, email, password })  => dispatch => {
 
     // Request Body
     const body = JSON.stringify({ username, password, email });
-
+    console.log(body)
     axios.post('http://127.0.0.1:8000/api/users/register', body, config)
         .then(res => {
             dispatch({

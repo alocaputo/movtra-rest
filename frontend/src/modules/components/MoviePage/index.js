@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import Poster from '../Poster';
-import { Button, Header, Icon, Modal, Form, TextArea, Container } from 'semantic-ui-react'
+import { Button, Header, Rating, Modal, Form, Checkbox, Container } from 'semantic-ui-react'
 import { Grid } from 'semantic-ui-react';
+import { logMovie } from "../../../actions/movies";
+import { connect } from 'react-redux'
+import DatePicker from 'react-date-picker';
 
 class MoviePage extends Component {
     state = {
-        movie: []
+        movie: [],
+        review: '',
+        rating: '',
+        favorite: false,
+        date: new Date()
       };
     
     async componentDidMount() {
@@ -20,7 +27,21 @@ class MoviePage extends Component {
         }
     }
 
+    onChange = e => this.setState({ [e.target.name]: e.target.value })
+
+    toggle = () => this.setState((prevState) => ({ favorite: !prevState.favorite }))
+    setDate = date => this.setState({ date })
+
+    handleRate = (e, { rating }) => this.setState({ rating })
+
+    onSubmit = e => {
+        e.preventDefault();
+        const { movie, review, rating, favorite, date } = this.state;
+        this.props.logMovie(this.state);
+    }
+
     render() {
+        const { movie, review, rating, favorite, date } = this.state
         return (
         <React.Fragment>
             <React.Suspense fallback={<div>Loading...</div>}>
@@ -62,23 +83,36 @@ class MoviePage extends Component {
                         <Modal trigger={<Button>Show Modal</Button>} closeIcon>
                         <Header icon='archive' content='Log movie' />
                             <Modal.Content>
-                            <Form>
-                                <TextArea placeholder='Tell us more' />
-                            </Form>
-                            <Form>
-                                <TextArea placeholder='Tell us more' />
-                            </Form>
-                            <Form>
-                                <TextArea placeholder='Tell us more' />
+                                <Form onSubmit={this.onSubmit}>
+                                    <Form.Field>
+                                    <DatePicker
+                                        onChange={this.setDate}
+                                        value={this.state.date}
+                                        />
+                                    </Form.Field>
+                                    <Form.Field>
+
+                                        
+                                    <Rating maxRating={5} onRate={this.handleRate} />
+                                    </Form.Field>
+                                    <Form.Field>
+                                        <label>review</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            name="review"
+                                            onChange={this.onChange}
+                                            value={review}
+                                        />
+                                    </Form.Field>
+                                    <Form.Field>              
+                                        <Checkbox label='favorite' onChange={this.toggle} />
+                                    </Form.Field>
+                                    <Button type='submit'>Log</Button>
                             </Form>
                             </Modal.Content>
                             <Modal.Actions>
-                                <Button color='red'>
-                                    <Icon name='remove' /> No
-                                </Button>
-                                <Button color='green'>
-                                    <Icon name='checkmark' /> Yes
-                                </Button>
+                            
                             </Modal.Actions>
                         </Modal>
                     </Grid.Column>
@@ -93,4 +127,8 @@ class MoviePage extends Component {
     }
 }
 
-export default MoviePage;
+const mapStateToProps = state => ({
+    movie: state
+  });
+
+export default connect(mapStateToProps, {logMovie})(MoviePage);

@@ -131,7 +131,7 @@ class DiaryView(generics.GenericAPIView):
         data = {
             'tmdb_id': request.data['movie']['id'],
             'adult': request.data['movie']['adult'],
-            'belongs_to_collection': request.data['movie']['belongs_to_collection'],
+            'belongs_to_collection': False,
             'budget': request.data['movie']['budget'],
             'homepage': request.data['movie']['homepage'],
             'imdb_id': request.data['movie']['imdb_id'],
@@ -155,12 +155,15 @@ class DiaryView(generics.GenericAPIView):
         #movie, _ = Movie.objects.update_or_create(**data)
         try:
             movie = Movie.objects.get(tmdb_id=data['tmdb_id'])
-        except Person.DoesNotExist:
-            movie = Movie(**data)
+        except Movie.DoesNotExist:
+            print(data)
+            movie = Movie.objects.create(**data)
         if not request.user.id:
             return Response('Forbidden')
+
         user = CustomUser.objects.get(id=request.user.id)
         request.data['movie'] = movie
+
         #if request.data.get('rating'):
         #    r, _ = Ratings.objects.get_or_create(game=game, user=user)
         #    r.rating = request.data['rating']
@@ -172,9 +175,9 @@ class DiaryView(generics.GenericAPIView):
         if movie in user.watchlist.all():
             user.watchlist.remove(movie)
         print(request.data)
-        
+
         entry = Diary.objects.create(user=user, **request.data)
-        
+
         if not movie in user.watched.all():
             user.watched.add(movie)
         
