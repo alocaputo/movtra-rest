@@ -4,7 +4,9 @@ import { Button, Header, Rating, Modal, Form, Checkbox, Container } from 'semant
 import { Grid } from 'semantic-ui-react';
 import { logMovie } from "../../../actions/movies";
 import { connect } from 'react-redux'
-import DatePicker from 'react-date-picker';
+import DayPicker from 'react-day-picker';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import 'react-day-picker/lib/style.css';
 
 class MoviePage extends Component {
     state = {
@@ -85,7 +87,7 @@ class MoviePage extends Component {
                             <Modal.Content>
                                 <Form onSubmit={this.onSubmit}>
                                     <Form.Field>
-                                    <DatePicker
+                                    <DayPickerInput  
                                         onChange={this.setDate}
                                         value={this.state.date}
                                         />

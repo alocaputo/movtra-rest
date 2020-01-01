@@ -164,6 +164,9 @@ class DiaryView(generics.GenericAPIView):
         user = CustomUser.objects.get(id=request.user.id)
         request.data['movie'] = movie
 
+        #TODO: format done client side
+        if request.data['date'] != '':
+            request.data['date'] = request.data['date'].split('T')[0]
         #if request.data.get('rating'):
         #    r, _ = Ratings.objects.get_or_create(game=game, user=user)
         #    r.rating = request.data['rating']
