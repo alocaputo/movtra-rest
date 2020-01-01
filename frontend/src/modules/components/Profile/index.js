@@ -4,7 +4,6 @@ import { getProfile } from '../../../actions/profile';
 import { Container, Grid } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import Sidebar from './Sidebar';
-import Poster from '../Poster';
 
 class Profile extends Component {
     static propTypes = {

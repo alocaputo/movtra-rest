@@ -17,7 +17,7 @@ export const getMovies = () => (dispatch, getState) => {
 export const logMovie = ({ movie, review, rating, favorite, date }) => (dispatch, getState) => {
 
     const body = JSON.stringify({ movie, review, rating, favorite, date });
-    
+
     axios.post('http://127.0.0.1:8000/api/actions/diary', body, tokenConfig(getState))
     .then(res => {
         dispatch({
