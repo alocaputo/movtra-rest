@@ -12,16 +12,15 @@ class All extends Component {
     getMovies: PropTypes.func.isRequired
   }
   
-  async componentDidMount() {
+  componentDidMount() {
     this.props.getMovies();
   }
 
   render() {
-    
     return (
         <Container>
             <div>
-        {this.props.movies.map(movie => (
+        {this.props.movies.length > 0 && this.props.movies.map(movie => (
             
           <div key={movie.tmdb_id}>
             <h2>{movie.title}</h2>

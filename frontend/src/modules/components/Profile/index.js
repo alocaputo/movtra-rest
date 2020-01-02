@@ -4,6 +4,7 @@ import { getProfile } from '../../../actions/profile';
 import { Container, Grid } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import Sidebar from './Sidebar';
+import Recent from './Recent';
 
 class Profile extends Component {
     static propTypes = {
@@ -28,7 +29,10 @@ class Profile extends Component {
 
                     <Grid.Row>
                         <Grid.Column width={10}>
-                            <h2>Content</h2>
+                            <h2>Contnet</h2>
+                            <Recent
+                                watched = {profile.watched}
+                            />
                         </Grid.Column>
                         <Grid.Column width={6}>
                             <Sidebar

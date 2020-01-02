@@ -7,7 +7,6 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
     <Route 
         {...rest}
         render={props => {
-            console.log(auth);
             if (auth.isLoading) {
                 return <h2>isLoading...</h2>
             } else if (!auth.isAuthenticated) {
