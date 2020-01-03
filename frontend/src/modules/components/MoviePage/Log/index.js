@@ -30,6 +30,8 @@ class MoviePage extends Component {
         this.props.logMovie(this.state);
     }
 
+    onRequestClose = () => { this.visibleModal(false); } 
+
     render() {
         const { movie, review, rating, favorite, date } = this.state
         return (

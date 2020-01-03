@@ -3,7 +3,6 @@ import { Card } from 'semantic-ui-react'
 import Poster from '../Poster';
 
 function MovieCard(props) {
-    console.log(props.movie);
     return (
         <Card>
             <Poster

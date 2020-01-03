@@ -1,4 +1,4 @@
-import { GET_PROFILE } from '../actions/types.js'
+import { GET_PROFILE, GET_DIARY } from '../actions/types.js'
 
 const initialState = {
     id: '',
@@ -8,6 +8,7 @@ const initialState = {
     watched: [],
     watchlist: [],
     favorites: [],
+    diary: []
 }
 
 export default function(state = initialState, action) {
@@ -22,6 +23,11 @@ export default function(state = initialState, action) {
                 watched: action.payload.watched,
                 watchlist: action.payload.watchlist,
                 favorites: action.payload.favorites,
+            }
+        case GET_DIARY:
+            return {
+                ...state,
+                diary: action.payload
             }
         default:
             return state;

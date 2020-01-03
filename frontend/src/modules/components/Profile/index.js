@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { getProfile } from '../../../actions/profile';
-import { Container, Grid } from 'semantic-ui-react';
+import { getProfile, getDiary } from '../../../actions/profile';
+import { Container, Grid, Divider } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import Sidebar from './Sidebar';
 import Recent from './Recent';
@@ -13,10 +13,12 @@ class Profile extends Component {
 
     componentDidMount() {
         this.props.getProfile(this.props.match.params.username);
+        this.props.getDiary(this.props.match.params.username);    
     }
 
     render() {
         const profile = this.props.profile
+
         return (
             <Container>
                 <Grid>
@@ -28,13 +30,12 @@ class Profile extends Component {
                     </Grid.Row>
 
                     <Grid.Row>
-                        <Grid.Column width={10}>
-                            <h2>Contnet</h2>
-                            <Recent
-                                watched = {profile.watched}
-                            />
+                        <Grid.Column width={12}>
+                            <h4>Recent Activity</h4>
+                            <Divider/>
+                            {profile.diary.length > 0 ? <Recent diary = {profile.diary} /> : <></>}
                         </Grid.Column>
-                        <Grid.Column width={6}>
+                        <Grid.Column width={4}>
                             <Sidebar
                                 watchlist = {profile.watchlist}
                             />
@@ -49,7 +50,7 @@ class Profile extends Component {
 
 const mapStateToProps = state => ({
     profile: state.profile,
-    auth: state.auth
+    auth: state.auth,
   });
 
-export default connect(mapStateToProps, {getProfile, })(Profile);
+export default connect(mapStateToProps, {getProfile, getDiary})(Profile);

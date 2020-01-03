@@ -196,7 +196,7 @@ class DiaryView(generics.GenericAPIView):
         user = CustomUser.objects.get(username=request.GET['username'])
         entries = Diary.objects.filter(user=user).annotate(
                     month=ExtractMonth('date'), 
-                    year=ExtractYear('date')).order_by('-date')[:limit]
+                    year=ExtractYear('date')).order_by('date')[:limit]
 
         # http://ls.pwd.io/2013/05/create-groups-from-lists-with-itertools-groupby/
         response = []
