@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
-import { Menu, Segment, Button } from 'semantic-ui-react'
+import { Menu, Segment, Button, Input } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import { logout } from '../../../actions/auth'
 import logo from '../../../logo.png'
+import MovieSearch from '../MovieSearch'
 
 class Navbar extends Component {
-  state = { activeItem: 'home' }
+  state = { activeItem: 'home',
+            search: ''
+}
 
   static propTypes ={
     auth: PropTypes.object.isRequired,
@@ -16,6 +19,8 @@ class Navbar extends Component {
   };
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  
+  handleResultSelect = result => <Link to={`/movie/${result.id}`}/>
 
   render() {
     const { activeItem } = this.state
@@ -79,6 +84,9 @@ class Navbar extends Component {
             onClick={this.handleItemClick}
           />
           <Menu.Menu position='right'>
+          <Menu.Item>
+              <MovieSearch handleResultSelecto={this.handleResultSelect}/>
+            </Menu.Item>
           { isAuthenticated ? authLinks : guestLinks }
           </Menu.Menu>
         </Menu>

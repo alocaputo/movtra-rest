@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_MOVIES, LOG_MOVIE } from './types';
+import { GET_MOVIES, LOG_MOVIE, SEARCH_MOVIE } from './types';
 import { tokenConfig } from "./auth";
 
 //GET_MOVIES
@@ -22,6 +22,19 @@ export const logMovie = ({ movie, review, rating, favorite, date }) => (dispatch
     .then(res => {
         dispatch({
             type: LOG_MOVIE,
+            payload: res.data
+        });
+    }).catch(err => console.log(err));
+};
+
+//SEARCH_MOVIE
+export const searchMovie = ({ title }) => dispatch => {
+
+
+    axios.get(`http://127.0.0.1:8000/api/movies/search/${title}`)
+    .then(res => {
+        dispatch({
+            type: SEARCH_MOVIE,
             payload: res.data
         });
     }).catch(err => console.log(err));
