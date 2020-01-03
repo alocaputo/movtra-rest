@@ -18,6 +18,7 @@ class Profile extends Component {
 
     render() {
         const profile = this.props.profile
+        console.log(profile);
 
         return (
             <Container>
@@ -33,7 +34,7 @@ class Profile extends Component {
                         <Grid.Column width={12}>
                             <h4>Recent Activity</h4>
                             <Divider/>
-                            {profile.diary.length > 0 ? <Recent diary = {profile.diary} /> : <></>}
+                            {profile.recent.length > 0 ? <Recent recent = {profile.recent.reverse()} /> : <></>}
                         </Grid.Column>
                         <Grid.Column width={4}>
                             <Sidebar

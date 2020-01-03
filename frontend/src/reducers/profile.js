@@ -8,6 +8,7 @@ const initialState = {
     watched: [],
     watchlist: [],
     favorites: [],
+    recent: [],
     diary: []
 }
 
@@ -23,6 +24,7 @@ export default function(state = initialState, action) {
                 watched: action.payload.watched,
                 watchlist: action.payload.watchlist,
                 favorites: action.payload.favorites,
+                recent: action.payload.recent,
             }
         case GET_DIARY:
             return {

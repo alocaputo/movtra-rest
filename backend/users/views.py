@@ -75,7 +75,5 @@ class ProfileView(generics.GenericAPIView):
             # buttons in the frontend
             me = CustomUser.objects.get(id=request.user.id)
             serializer['me'] = UserSerializer(me).data
-            if user in me.following.all():
-                serializer['followingUser'] = True
-
+            
         return Response(serializer)

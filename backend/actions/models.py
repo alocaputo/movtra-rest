@@ -3,6 +3,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Diary
 class Diary(models.Model):
+    id = models.AutoField(primary_key=True)
     movie  = models.ForeignKey('movies.Movie', on_delete=models.CASCADE)
     user  = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE)
     date = models.DateField()

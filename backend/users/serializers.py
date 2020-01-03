@@ -4,6 +4,7 @@ from rest_framework import serializers
 #from actions.models import Journal
 from movies.serializers import MovieSerializer
 from .models import CustomUser
+from actions.serializers import DiarySerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -13,6 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+    recent = DiarySerializer(many=True)
     class Meta:
         model = CustomUser
         depth = 1
@@ -23,7 +25,8 @@ class ProfileSerializer(serializers.ModelSerializer):
             'bio',
             'watched',
             'watchlist',
-            'favorites'
+            'favorites',
+            'recent'
         )
 
 

@@ -174,15 +174,23 @@ class DiaryView(generics.GenericAPIView):
         #    r.rating = request.data['rating']
         #    r.save()
 
+
         if request.data.get('favorite') and not movie in user.favorites.all():
             user.favorites.add(movie)
 
         if movie in user.watchlist.all():
             user.watchlist.remove(movie)
-        print(request.data)
+        #print(request.data)
 
         entry = Diary.objects.create(user=user, **request.data)
 
+        if user.recent.all().count() < 4:
+            user.recent.add(entry)
+        else:
+            oldest_entry = user.recent.first()
+            user.recent.remove(oldest_entry)
+            user.recent.add(entry)
+        
         if not movie in user.watched.all():
             user.watched.add(movie)
         
@@ -196,7 +204,7 @@ class DiaryView(generics.GenericAPIView):
         user = CustomUser.objects.get(username=request.GET['username'])
         entries = Diary.objects.filter(user=user).annotate(
                     month=ExtractMonth('date'), 
-                    year=ExtractYear('date')).order_by('date')[:limit]
+                    year=ExtractYear('date')).order_by('-date')[:limit]
 
         # http://ls.pwd.io/2013/05/create-groups-from-lists-with-itertools-groupby/
         response = []

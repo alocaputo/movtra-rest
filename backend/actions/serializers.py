@@ -10,6 +10,7 @@ class  ActionSerializer(serializers.Serializer):
     value = serializers.BooleanField()
 
 class DiarySerializer(serializers.Serializer):
+    id = serializers.IntegerField()
     movie = MovieSerializer(read_only=True)
     rating = serializers.DecimalField(max_digits=2, decimal_places=1)
     review = serializers.TimeField()
