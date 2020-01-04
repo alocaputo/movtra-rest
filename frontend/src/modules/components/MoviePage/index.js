@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import { connect } from 'react-redux'
+import { getMovie } from '../../../actions/movies';
 import { Container } from 'semantic-ui-react'
 import { Grid } from 'semantic-ui-react';
 import 'react-day-picker/lib/style.css';
@@ -7,37 +8,27 @@ import Log from './Log';
 import MovieData from './MovieData'
 
 class MoviePage extends Component {
-    state = {
-        movie: [],
-        isLoaded: false,
-      };
-    
-    async componentDidMount() {
-        try {
-            const data = await fetch(`http://127.0.0.1:8000/api/movies/${this.props.match.params.tmdb_id}`);
-            const movie = await data.json();
-            this.setState({
-            movie,
-            isLoaded: true
-            });
-        } catch (e) {
-            console.log(e);
-        }
+    componentDidMount() {
+        this.props.getMovie(this.props.match.params.tmdb_id);
+        
     }
 
     render() {
+        //console.log(this.props);
+        const {isLoaded, movie} = this.props.movie
+        console.log(movie);
         return (
+            
                 <Container>
                     <section className='movie-layout'>
-                    {this.state.isLoaded ? 
+                    {isLoaded ? 
                     <Grid>
                         <Grid.Column width={13}>
-                        {this.state.isLoaded ? <MovieData data={this.state}/> : <p>Loading...</p>}
+                        {isLoaded ? <MovieData data={movie}/> : <p>Loading...</p>}
                         </Grid.Column>
                         
-                        <Grid.Column width={3}>
-                            
-                            {this.state.isLoaded ? <Log data={this.state}/> : <p>Loading...</p>}
+                        <Grid.Column width={3}>    
+                            {isLoaded ? <Log data={movie}/> : <p>Loading...</p>}
                         </Grid.Column>
 
                         
@@ -49,4 +40,8 @@ class MoviePage extends Component {
     }
 }
 
-export default MoviePage;
+const mapStateToProps = state => ({
+    movie: state.movies
+  });
+
+export default connect(mapStateToProps, {getMovie})(MoviePage);

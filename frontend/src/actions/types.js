@@ -11,3 +11,4 @@ export const GET_PROFILE = "GET_PROFILE";
 export const LOG_MOVIE = "LOG_MOVIE";
 export const GET_DIARY = "GET_DIARY";
 export const SEARCH_MOVIE = "SEARCH_MOVIE";
+export const GET_MOVIE = "GET_MOVIE";

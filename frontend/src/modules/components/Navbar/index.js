@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { logout } from '../../../actions/auth'
 import logo from '../../../logo.png'
 import MovieSearch from '../MovieSearch'
+import history from '../../../history'
 
 class Navbar extends Component {
   state = { activeItem: 'home',
@@ -20,7 +21,7 @@ class Navbar extends Component {
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
   
-  handleResultSelect = result => <Link to={`/movie/${result.id}`}/>
+  handleResultSelect = result => history.push(`/movie/${result.id}`);
 
   render() {
     const { activeItem } = this.state

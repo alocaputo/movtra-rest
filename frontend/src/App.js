@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
+import { Router, Route, Switch, Redirect } from 'react-router-dom'
 
 import store from './store'
 
@@ -14,7 +14,7 @@ import Login from './modules/components/accounts/Login'
 import Register from './modules/components/accounts/Register'
 import PrivateRoute from './modules/components/common/PrivateRoute'
 import { loadUser } from './actions/auth';
-
+import history from './history';
 
 class App extends Component {
 
@@ -25,7 +25,7 @@ class App extends Component {
   render() {
   return (
     <Provider store={store}>
-      <Router>
+      <Router history={history}>
         <React.Fragment>
           <Navbar/>
           <Switch>

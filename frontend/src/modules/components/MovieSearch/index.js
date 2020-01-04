@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { debounce } from "lodash";
-import { Search, Grid } from "semantic-ui-react";
+import { Search, Grid, Label } from "semantic-ui-react";
 import { Link, Redirect } from 'react-router-dom';
+
 
 const MovieSearch = ({ handleResultSelecto}) => {
     
@@ -15,7 +16,9 @@ const MovieSearch = ({ handleResultSelecto}) => {
 
   const [{ results, isLoading, value }, setState] = useState(defaultState);
   //handleResultSelect = result => <Redirect to={`/movie/${result.id}`}/>
-  const handleResultSelect = (e, { result }) => { setState({ value: result.title }); handleResultSelecto(result)}
+  const handleResultSelect = (e, { result }) => { setState({ value: result.title }); return handleResultSelecto(result)}
+
+  const resultRenderer = ({ title, release_date }) => <><Label as='a'> {title}<Label.Detail>{release_date}</Label.Detail></Label></>
 
   const search = debounce(title => {
     axios
@@ -23,7 +26,8 @@ const MovieSearch = ({ handleResultSelecto}) => {
       .then(response => { 
         const results = response.data.results.slice(0,9).map(result => ({
           id: result.id,
-          title: result.title
+          title: result.title,
+          release_date: result.release_date.slice(0,4)
         }));
         setState(prevState => ({
           ...prevState,
@@ -50,6 +54,7 @@ const MovieSearch = ({ handleResultSelecto}) => {
         <Search
           loading={isLoading}
           onResultSelect={handleResultSelect}
+          resultRenderer={resultRenderer}
           onSearchChange={e => onChange(e.target.value)}
           results={results}
           value={value}

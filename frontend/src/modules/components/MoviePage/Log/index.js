@@ -15,7 +15,7 @@ class MoviePage extends Component {
       };
     
       componentDidMount(){
-          this.setState({movie: this.props.data.movie})
+          this.setState({movie: this.props.data})
       }
 
     onChange = e => this.setState({ [e.target.name]: e.target.value })
