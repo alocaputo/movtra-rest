@@ -19,4 +19,5 @@ urlpatterns = [
     path('movies/', include('movies.urls')),
     path('users/', include('users.urls')),
     path('actions/', include('actions.urls')),
+    path('lists/', include('lists.urls')),
 ]

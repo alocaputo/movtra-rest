@@ -10,6 +10,8 @@ from .serializers import ActionSerializer, DiarySerializer
 from .models import Diary
 from django.db.models.functions import ExtractMonth, ExtractYear
 from .utils import AllowAnyGet
+from movies.serializers import MovieSerializer
+
 
 # Action: relationship with the movie
 class Actions(generics.GenericAPIView):
@@ -220,3 +222,4 @@ class DiaryView(generics.GenericAPIView):
             response.append(year)
 
         return Response(response)
+

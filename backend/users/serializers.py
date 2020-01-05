@@ -1,8 +1,6 @@
 from django.contrib.auth import authenticate
 from rest_framework.validators import UniqueValidator
 from rest_framework import serializers
-#from actions.models import Journal
-from movies.serializers import MovieSerializer
 from .models import CustomUser
 from actions.serializers import DiarySerializer
 
