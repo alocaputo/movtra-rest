@@ -39,8 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api',
     'movies',
+    'users',
     'rest_framework',
     'corsheaders',
+    'knox',
+    'actions',
+    'lists',
+    
 ]
 
 MIDDLEWARE = [
@@ -133,3 +138,9 @@ TMDB_KEY = os.getenv('APIKEY')
 TMDB_URL = 'https://api.themoviedb.org/3/{endpoint}/'
 
 CORS_ORIGIN_ALLOW_ALL = True   
+AUTH_USER_MODEL = 'users.CustomUser'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENITCATION_CLASSES': ('knox.auth.TokenAuthentication')
+}
+
